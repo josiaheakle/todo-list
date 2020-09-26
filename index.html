@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Todo</title>
+</head>
+<body>
+    
+    <form id='new-todo-form'onsubmit="return false">
+        <!-- <label for="todo-title">To-Do</label> -->
+        <input type="text" name="title" placeholder="To-Do" id="form-title">
+        <!-- <label for="todo-descr">Description</label> -->
+        <input type="text" name="descr" placeholder="Description" id="form-descr">
+        <label for="todo-urgent">Urgent</label>
+        <input type="checkbox" name="urgent" id="form-urgent">
+        <!-- <label for="todo-submit">Sumbit</label> -->
+        <input type="button" name="submit" value="Submit" id='form-submit'>
+    </form>
+
+    <div id="todo-container">
+        <h1 id='todo-title'></h1> 
+        <p id='todo-descr'></p>
+        <input type="checkbox" name="todo-urgent" id="todo-urgent" disabled>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

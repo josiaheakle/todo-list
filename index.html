@@ -3,28 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="style.css">
     <title>Todo</title>
 </head>
-<body>
-    
-    <form id='new-todo-form'onsubmit="return false">
-        <!-- <label for="todo-title">To-Do</label> -->
-        <input type="text" name="title" placeholder="To-Do" id="form-title">
-        <!-- <label for="todo-descr">Description</label> -->
-        <input type="text" name="descr" placeholder="Description" id="form-descr">
-        <label for="todo-urgent">Urgent</label>
-        <input type="checkbox" name="urgent" id="form-urgent">
-        <!-- <label for="todo-submit">Sumbit</label> -->
-        <input type="button" name="submit" value="Submit" id='form-submit'>
-    </form>
+<body class='deep-purple lighten-4'>
 
-    <div id="todo-container">
-        <h1 id='todo-title'></h1> 
-        <p id='todo-descr'></p>
-        <input type="checkbox" name="todo-urgent" id="todo-urgent" disabled>
-    </div>
+    <nav class = "deep-purple">
+        <div class='nav-wrapper'>
+            <a href="#" class="brand-logo center">To-Do</a>
+        </div>
+    </nav>
 
+    <main>
+        <div id='projects-container' class="container">
+            <!-- SHOW ALL PROJECTS HERE -->
+
+            <div class='card deep-purple darken-2'>
+                <div class='card-content white-text'>
+                    <span class='card-title'>Projects</span>
+                    <p>A list of projects in an accordian will appear here</p>
+                </div>
+            </div>
+            
+
+        </div>
+
+        <div id='open-project' hidden>
+
+            <h2 id='project-title'></h2>
+            <p id='project-description'></p>
+            <p id='project-date'></p>
+
+            <!-- SET PROJS CONT TO HIDDEN WHEN THIS IS NOT -->
+        
+            <form id='new-todo-form' onsubmit="return false" hidden>
+                <input type="text" name="title" placeholder="To-Do" id="form-title">
+                <input type="text" name="descr" placeholder="Description" id="form-descr">
+                <label for="todo-urgent">Urgent</label>
+                <input type="checkbox" name="urgent" id="form-urgent">
+                <input type="button" name="submit" value="Submit" id='form-submit'>
+            </form>
+
+            <!-- WILL HOLD ALL TODOS FOR THE PROJECT -->
+            <div id='todos-container' hidden>
+
+            </div>
+        </div>
+
+
+
+
+    </main>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

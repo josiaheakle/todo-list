@@ -1,3 +1,53 @@
 #projects-container h2 {
     text-decoration: underline;
 }
+
+.collapsible-header {
+    justify-content: center;
+}
+
+.collapsible-body {
+    justify-content: center;
+}
+
+.right {
+    text-align: right;
+}
+
+#open-project-button {
+    position: relative;
+    bottom: 0px;
+}
+
+
+.pad-top {
+    padding-top: 15px;
+}
+
+.pad-bot {
+    padding-bottom: 15px;
+}
+
+.mar-top {
+    margin-top: 45px;
+}
+
+.mar-bot {
+    margin-bottom: 45px;
+}
+
+.todo-container {
+    top: 20px;
+}
+
+.close-btn {
+    margin: 10px;
+}
+
+.pad-left {
+    padding-left: 10px;
+}
+
+.no-mar-bot {
+    margin-bottom: 0px;
+}

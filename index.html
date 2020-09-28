@@ -5,57 +5,242 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <title>Todo</title>
 </head>
-<body class='deep-purple lighten-4'>
+<body class='blue-grey lighten-4'>
 
-    <nav class = "deep-purple">
-        <div class='nav-wrapper'>
-            <a href="#" class="brand-logo center">To-Do</a>
+    <nav class = "blue-grey darken-2">
+        <div class='nav-wrapper container'>
+            <a id='home-link' class="breadcrumb" href="#">All Projects</a>
+            <a id='project-breadcrumb' class="breadcrumb" href="" hidden></a>
+            <!-- <a href="#" class="brand-logo center">To-Do</a> -->
         </div>
     </nav>
 
     <main>
-        <div id='projects-container' class="container">
+        <div id='projects-container' class="container mar-bot">
+
             <!-- SHOW ALL PROJECTS HERE -->
 
-            <div class='card deep-purple darken-2'>
+            <div class='card blue-grey'>
                 <div class='card-content white-text'>
-                    <span class='card-title'>Projects</span>
-                    <p>A list of projects in an accordian will appear here</p>
+                    <div id='card-header-container' class='row'>
+                        <span class='card-title center'>My Projects</span>
+                    </div>
+
+                    <ul id='project-accordian' class='collapsible'>
+
+
+
+
+
+                    </ul>
+
+                    <a id='new-project-btn' class="right btn-large btn-floating waves-effect waves-light" title='New Project'><i id='floating-button' class="material-icons">add</i></a>
+
                 </div>
             </div>
-            
+
+            <div id='new-project-form' class='card blue-grey darken-2 mar-top' hidden>
+                <a id='close-project-btn' class="right btn blue-grey darken-2 btn-flat waves-effect waves-light close-btn" title='Close Todo'><i id='floating-button' class="material-icons">close</i></a>
+
+                <div class='card-content center'>
+
+                    <div class="container">
+                        <span class="card-title center">New Project</span>
+                    </div>
+                    <form class='blue-grey darken-3' onsubmit="return false" >
+                        <div class="container">
+
+                            <input class="center" type="text" name="title"  id="form-title">
+                            <label for="form-title">Title</label>
+
+                            <input class="center" type="text" name="descr"  id="form-descr">
+                            <label for="form-descr">Description</label>
+
+
+
+
+                            <div class="row">
+                                
+                                <div class='col s6'>
+                                    <input type="date" name='date' id='form-due-date'  placeholder="">
+                                    <label for="form-due-date">Due Date</label>
+                                </div>
+                                
+                                <div class="pad-top col s6">
+                                    <form id='color-form' onsubmit='return false'>
+                                        <div class='row'>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='blue-grey' checked />
+                                                    <span>Grey</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='green' />
+                                                    <span>Green</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='blue' />
+                                                    <span>Blue</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='yellow' />
+                                                    <span>Yellow</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='red' />
+                                                    <span>Red</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='purple' />
+                                                    <span>Purple</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='pink' />
+                                                    <span>Pink</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='white' />
+                                                    <span>White</span>
+                                                </label>
+                                            </p>
+                                            <p class="col s4">
+                                                <label class='left'>
+                                                    <input name="color-radio" type="radio" value='black' />
+                                                    <span>Black</span>
+                                                </label>
+                                            </p>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="pad-top pad-bot">
+                                <a class='btn-small' id='form-submit'>Submit</a>
+                            </div>
+                                <!-- <input type="button" name="submit" value="Submit" id='form-submit'> -->
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
 
         </div>
 
-        <div id='open-project' hidden>
+        <div id='open-project' class="row container" hidden>
 
-            <h2 id='project-title'></h2>
-            <p id='project-description'></p>
-            <p id='project-date'></p>
+            <div id='todo-cards' class='col s7 left'>
+                <!-- todo cards rendered here -->
+            </div>
+
+
+
+
+            <div id='project-info' class='card blue-grey'>
+                <div class='card-content center'>
+                    <div id='card-header-container' class='row'>
+                        <span id='project-title' class='card-title center'></span>
+                    </div>        
+                    <p id='project-description'></p>
+                    <p id='project-date'></p>
+                    <a id='new-todo-btn' class="right btn-large btn-floating waves-effect waves-light" title='New Todo'><i id='floating-button' class="material-icons">add</i></a>
+
+                </div>
+
+            </div>
 
             <!-- SET PROJS CONT TO HIDDEN WHEN THIS IS NOT -->
         
-            <form id='new-todo-form' onsubmit="return false" hidden>
-                <input type="text" name="title" placeholder="To-Do" id="form-title">
-                <input type="text" name="descr" placeholder="Description" id="form-descr">
-                <label for="todo-urgent">Urgent</label>
-                <input type="checkbox" name="urgent" id="form-urgent">
-                <input type="button" name="submit" value="Submit" id='form-submit'>
-            </form>
+            <div id='new-todo-form' class='card blue-grey darken-2 mar-top' hidden >
+                <a id='close-todo-btn' class="right btn blue-grey darken-2 btn-flat waves-effect waves-light close-btn" title='Close Todo'><i id='floating-button' class="material-icons">close</i></a>
+
+                <div class='card-content center'>
+
+                    <div class="container">
+                        <span class="card-title center">New Todo</span>
+                    </div>
+                    <form class='blue-grey darken-3' onsubmit="return false" >
+                        <div class="container">
+
+                            <input class="center" type="text" name="title"  id="form-title">
+                            <label for="form-title">Title</label>
+
+                            <input class="center" type="text" name="descr"  id="form-descr">
+                            <label for="form-descr">Description</label>
+
+
+
+
+                            <div class="row">
+                                
+                                <div class='col s6'>
+                                    <input type="date" name='date' id='form-due-date'  placeholder="">
+                                    <label for="form-due-date">Due Date</label>
+                                </div>
+                                
+                                <div class="pad-top col s6">
+                                    <p class='center-horizontal pad-top'>
+                                        <label>
+                                            <input type="checkbox" name="urgent" class="filled-in" id="form-urgent">
+                                            <span>Urgent</span>
+                                        </label>
+                                    </p>
+                                </div>
+
+                                <div id='checkbox-container' >
+                                    <input type="text" name='checklist-item' id='form-checkist-item' class='center' placeholder="">
+                                    <label id='task-label' for="form-checkist-item">Task #1</label>
+                                </div>
+                                <div class="row no-mar-bot pad-top">
+                                    <a class='btn-small col s4 offset-s4' id='new-task-btn'>Add Task</a>
+                                </div>
+
+                                
+                            </div>
+
+                            <div class="pad-top pad-bot row">
+            
+                                <a class='btn-small col s8 offset-s2' id='form-submit'>Submit</a>
+                            </div>
+                                <!-- <input type="button" name="submit" value="Submit" id='form-submit'> -->
+                        </div>
+
+                    </form>
+                </div>
+            </div>
 
             <!-- WILL HOLD ALL TODOS FOR THE PROJECT -->
-            <div id='todos-container' hidden>
+            <div id='todos-container' class="row center mar-top" hidden>
 
             </div>
+
+
+
+
         </div>
 
 
 
 
     </main>
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="script.js"></script>

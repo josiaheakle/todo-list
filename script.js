@@ -1,9 +1,6 @@
-// TODO LIST
-// Individual ToDo lists under parent projects
-// TODO CLASS : contains date, description, URGENT bool, title, (COLOR), notes, checklist
-// PROJECT CLASS : contains array of todo objects 
-// 
 
+
+// Counter to have unique IDs
 let projectCounter = 0;
 const Project = (titleIn, descrIn = '', dueDateIn = '', todoObjArray = [], colorIn = 'blue-grey') => {
 
@@ -38,22 +35,21 @@ const Project = (titleIn, descrIn = '', dueDateIn = '', todoObjArray = [], color
         return color;
     }
 
-    return { todoArray, addTodo, getDueDate, getDescription, getTitle, getId }
+    const getTasks = () => {
+        return todoArray;
+    }
+
+    return { getTasks, addTodo, getDueDate, getDescription, getTitle, getId }
 
 }
 
 const Todo = (titleIn, descrIn ='', dueDateIn='', urgentIn=false) => {
-    // TITLE - summary of todo
-    // DATE  - due date
-    // DESCRIPTION - description of todo
-    // URGENT - bool
     let title = titleIn;
     let dueDate = dueDateIn;
     let description = descrIn;
     let urgent = urgentIn;
     let completed = false;
     let tasks = [];
-
     const setUrgent = (bool) => {
         urgent = bool;
     }
@@ -70,55 +66,23 @@ const Todo = (titleIn, descrIn ='', dueDateIn='', urgentIn=false) => {
         return title;
     }
     const addTasks = (tasksIn) => {
-        tasks = tasksIn;
+        tasks = [];
+        tasksIn.forEach(t => {
+            tasks.push(t)
+        })
     }
     return { setUrgent, getUrgent, getDueDate, getDescription, getTitle, addTasks, tasks, completed }
 
 }
 
 
-// function ProjectListItem (project) {
-//     const projId = project.getId();
-//     return (
-//         <li id={`project-list-${projId}`}>
-//             <div id={`project-header-${projId}`} class={`collapsible-header blue-grey darken-2`}>
-//                 {project.getTitle}
-//                 <div id={`project-body-${projId}`} class={`collapsible-body blue-grey darken-3`}>
-//                     <div class={`row`}>
-//                         <span class={`col s8`}>
-//                             {project.getDescription()}
-//                         </span>
-//                         <span class={`col s4`}>
-//                             <span class={`left`}> 
-//                                 {`Due Date:`}
-//                             </span>
-//                             <span class={`right`}>
-//                                 {project.getDueDate()}
-//                             </span>
-//                             <span class={`left`}> 
-//                                 {`# of ToDos: `}
-//                             </span>
-//                             <span class={`right`}>
-//                                 {project.todoArray.length}
-//                             </span>
-//                         </span>
-
-//                     </div>
-//                     <a href={'#'} id={projId} class={'open-project-button wave-effect waves-light btn red center'}>{`Open`}</a>
-//                 </div>
-//             </div>
-//         </li>
-//     )
-// }
-
-
-
 // PROJECT MANAGER ================================================= PROJECT MANAGER
 const ProjectManager = (function() {
 
-    // ARRAY OF PROJECTS - this should be updated when login function is created
+    // ARRAY OF PROJECTS
     let projects = [];
-    // Index of which project is being used
+
+    // Index of which project is currently open
     let currentProj = 0;
 
     // Creates a default project
@@ -133,11 +97,13 @@ const ProjectManager = (function() {
         projects.push(proj);
     }
     
-
+    // Shows all projects on DOM
     const showAllProjects = () => {
         DOMController.printProjects(projects)
     }
 
+    // Gets the index within projects[] of the project
+    // or returns -1 if project is not found
     const getProjIndex = (proj) => {
         let i=0
         let properIndex = -1
@@ -149,9 +115,9 @@ const ProjectManager = (function() {
             i++
         })
         return properIndex
-
     }
 
+    // returns currentProj
     const getCurrentProj = () => {
         return currentProj;
     }
@@ -282,82 +248,72 @@ const DOMController = (function() {
         const id = proj.getId()
 
         const listElem = document.createElement('li')
-        listElem.id = `project-list-${id}`
-        
         const projHeader = document.createElement('div')
+        const projBody = document.createElement('div')
+        const projBodyDiv = document.createElement('div')
+        const projBodySpan = document.createElement('span')
+        const projDueSpan = document.createElement('div')
+        const projDueSpanLeft = document.createElement('span')        
+        const projDueSpanRight = document.createElement('span')
+        const br = document.createElement('br');
+        const projTodoAmtSpanLeft = document.createElement('span')
+        const projTodoAmtSpanRight = document.createElement('span')
+        const projOpenButton = document.createElement('a')
+
+        // List element under collapsible UL
+        listElem.id = `project-list-${id}`
+
+        // Card header
         projHeader.id = `project-header-${id}`
         projHeader.className = 'collapsible-header blue-grey darken-2'
         projHeader.textContent = `${proj.getTitle()}`
 
-        listElem.appendChild(projHeader)
-
-        const projBody = document.createElement('div')
+        // Card body
         projBody.id = `project-body-${id}`
         projBody.className = "collapsible-body blue-grey darken-3 row no-mar-bot"
 
-        const projBodyDiv = document.createElement('div')
+        // Span to organize under card body
         projBodyDiv.className = 'row'
 
-        const projBodySpan = document.createElement('span')
+        // Span to organize under body div
         projBodySpan.className = 'col s8'
         projBodySpan.textContent = `${proj.getDescription()}`
-        projBodyDiv.appendChild(projBodySpan)
-
-
-
-        const projDueSpan = document.createElement('div')
         projDueSpan.className = 'col s4 row'
 
-        const projDueSpanLeft = document.createElement('span')
+        // Span under body span to organize left
         projDueSpanLeft.className = 'left'
         projDueSpanLeft.textContent = 'Due Date:'
 
-        const projDueSpanRight = document.createElement('span')
+        // Span under body span to organize right 
         projDueSpanRight.className = 'right'
         projDueSpanRight.textContent = `${(proj.getDueDate()=='')?'n/a':proj.getDueDate()}`
 
-        const br = document.createElement('br');
-
-        projDueSpan.appendChild(projDueSpanLeft)
-        projDueSpan.appendChild(projDueSpanRight)
-
-        projDueSpan.appendChild(br)
-
-        const projTodoAmtSpanLeft = document.createElement('span')
+        // 
         projTodoAmtSpanLeft.className = 'left'
         projTodoAmtSpanLeft.textContent = '# of ToDos:'
 
-        const projTodoAmtSpanRight = document.createElement('span')
         projTodoAmtSpanRight.className = 'right'
-        projTodoAmtSpanRight.textContent = ` ${proj.todoArray.length}`
+        projTodoAmtSpanRight.textContent = ` ${proj.getTasks().length}`
 
 
-        projDueSpan.appendChild(projTodoAmtSpanLeft)
-        projDueSpan.appendChild(projTodoAmtSpanRight)
-
-        // projDueSpan.appendChild(projOpenButton)
 
 
-        // <a class="waves-effect waves-light btn">button</a>
-
-
-        projBodyDiv.appendChild(projDueSpan)
-
-        projBody.appendChild(projBodyDiv)
-        listElem.appendChild(projBody)
-
-        const projOpenButton = document.createElement('a')
         projOpenButton.id = proj.getId();
         projOpenButton.className = 'open-project-button wave-effect waves-light btn center col s8 offset-s2'
         projOpenButton.textContent = 'Open'
 
+        listElem.appendChild(projHeader)
+        projBodyDiv.appendChild(projBodySpan)
+        projDueSpan.appendChild(projDueSpanLeft)
+        projDueSpan.appendChild(projDueSpanRight)
+        projDueSpan.appendChild(br)
+        projDueSpan.appendChild(projTodoAmtSpanLeft)
+        projDueSpan.appendChild(projTodoAmtSpanRight)
+        projBodyDiv.appendChild(projDueSpan)
+        projBody.appendChild(projBodyDiv)
+        listElem.appendChild(projBody)
         projBody.appendChild(projOpenButton)
-        
         projsAccor.appendChild(listElem)
-
-
-
-
 
     }
 
@@ -379,7 +335,7 @@ const DOMController = (function() {
         projDate.textContent = proj.getDueDate();
 
         _clearProjectTodos()
-        proj.todoArray.forEach(todo => {
+        proj.getTasks().forEach(todo => {
             printTodo(todo)
         });
     }
@@ -414,7 +370,7 @@ const DOMController = (function() {
     // TODO DOM ========================================= TODO DOM 
     // Creates a new todo container
     
-    const _newTodoContainer = () => {
+    const _newTodoContainer = (todo) => {
 
         const spacer = document.createElement('div')
         spacer.className = 'todo-spacer col s6'
@@ -430,11 +386,32 @@ const DOMController = (function() {
         const todoDueDate = document.createElement('p')
         todoDueDate.id = 'todo-due-date'
 
+        const todoTasks = document.createElement('ul')
+        todoTasks.id = 'todo-task-array'
+
+        for(let i=0; i< todo.tasks.length; i++) {
+            const todoTask = document.createElement('li')
+            todoTask.id = `task-${i}`
+            todoTask.className = 'row'
+
+            const todoCheck = document.createElement('input')
+            todoCheck.type = 'checkbox'
+            todoCheck.className = 'col s2'
+            todoTask.appendChild(todoCheck)
+
+            const todoName = document.createElement('p')
+            todoName.textContent = todo.tasks[i]
+            todoTask.appendChild(todoName)
+            todoCont.appendChild(todoTask)
+            
+        }
+
         
 
         todoCont.appendChild(todoTitle)
-        todoCont.appendChild(todoDescr)
         todoCont.appendChild(todoDueDate)
+
+        todoCont.appendChild(todoDescr)
         // todoCont.appendChild(todoUrgent)
         spacer.appendChild(todoCont)
         projTodos.appendChild(spacer)
@@ -444,11 +421,13 @@ const DOMController = (function() {
     // Print todo to the DOM
     const printTodo = (todo) => {
 
-        _newTodoContainer()
+        _newTodoContainer(todo)
         const todoCont = document.querySelector(`#todo-container-${todoIndex-1}`)
 
 
         let strTitle;
+
+        // IF URGENT - ADD FUNCTIONALITY
         if(todo.getUrgent()) {
             console.log(todoCont.classList)
             todoCont.classList.forEach(li => {
@@ -460,6 +439,8 @@ const DOMController = (function() {
             })
             // todoCont.className = `${todoCont.className} red`
         } 
+
+
 
         const todoTitle = todoCont.querySelector('#todo-title')
         const todoDescr = todoCont.querySelector('#todo-descr')
@@ -518,6 +499,10 @@ const DOMController = (function() {
             if(formTitle.value != '') {
                 let todo = Todo(formTitle.value, formDescription.value, formDueDate.value, formUrgent.checked)
                 todo.addTasks(tasks)
+
+                todo.tasks.forEach(t => {
+                    console.log(t)
+                })
 
                 // ADD TODO TO PROJECT
                 ProjectManager.projects[ProjectManager.getCurrentProj()].addTodo(todo);

@@ -14,7 +14,9 @@
     <nav class = "blue-grey darken-2">
         <div class='nav-wrapper container'>
             <a id='home-link' class="breadcrumb" href="#">All Projects</a>
-            <a id='project-breadcrumb' class="breadcrumb" href="" hidden></a>
+            <a id='project-breadcrumb' class="breadcrumb" href="#" onclick="return false" hidden></a>
+            <!-- LINK TO MY PORTFOLIO -->
+            <a href="" id='portfolio-link' class='right ' title='Check out my other projects!'> <b>todo.</b> <em>by Josiah Eakle</em></a>
         </div>
     </nav>
 
@@ -34,6 +36,7 @@
                     </ul>
 
                     <!-- Button to show new project form -->
+
                     <a id='new-project-btn' class="right btn-large btn-floating waves-effect waves-light" title='New Project'><i id='floating-button' class="material-icons">add</i></a>
                 </div>
             </div>
@@ -58,14 +61,14 @@
 
                             <!-- CHANGE FROM LEFT AND RIGHT TO TOP AND BOTTOM WHEN MOBILE -->
                             <div class="row">
-                                <div class='col s6'>
+                                <div class='col s6 offset-s3'>
                                     <input type="date" name='date' id='form-due-date'  placeholder="">
                                     <label for="form-due-date">Due Date</label>
                                 </div>
 
                                 <!-- COLOR RADIOS -->
-                                <div class="pad-top col s6">
-                                    <form id='color-form' onsubmit='return false'>
+                                <!-- <div class="pad-top col s6"> -->
+                                    <!-- <form id='color-form' onsubmit='return false'>
                                         <div class='row'>
                                             <p class="col s4">
                                                 <label class='left'>
@@ -123,7 +126,7 @@
                                             </p>
                                         </div>
                                     </form>
-                                </div>
+                                </div> -->
                                 
                             </div>
 
@@ -175,13 +178,7 @@
                             <label for="form-descr">Description</label>
 
                             <div class="row">
-                                <div id='checkbox-container' class='col s8'>
-                                    <input type="text" name='checklist-item' id='form-checkist-item' class='center' placeholder="">
-                                    <label id='task-label' for="form-checkist-item">Task #1</label>
-                                </div>
-                                <div class="row no-mar-bot pad-top col s4">
-                                    <a class='btn-small' id='new-task-btn'>Add Task</a>
-                                </div>
+
 
                                 <div class='col s8'>
                                     <input type="date" name='date' id='form-due-date'  placeholder="">
@@ -208,18 +205,28 @@
             </div>
 
             <!-- WILL HOLD ALL TODOS FOR THE PROJECT -->
-            <div id='todos-container' class="row center mar-top" hidden>
+            <ul id='todos-container' class="row center mar-top collection" hidden>
+                <li class='collection-item blue-grey lighten-1'>
+                    <a href="#"><span id='due-date-sort' class='left black-text'><i class='material-icons smaller-icon'>arrow_drop_down</i>Due Date</span></a>
+                    <a href="#"><span id='title-sort' class='center black-text'><i class='material-icons smaller-icon'>arrow_drop_down</i>Title</span></a>
+                    <a href="#"><span id='complete-sort' class='right black-text'><i class="material-icons smaller-icon">arrow_drop_down</i>Completed</span></a>
 
-            </div>
+                </li>
+            
+
+            </ul>
 
         </div>
 
-
+    <!-- <button class='btn center' onclick="localStorage.clear()">CLEAR STORAGE</button> -->
 
 
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src='projectAndTodoClass.mjs'></script>
+    <script src='fileManager.mjs'></script>
+    <script src='dom_script.js'></script>
     <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,212 @@
+Hierarchy of objects
+
+Project
+    - title
+    - description
+    - color
+    - due date
+    - unique id
+Todo 
+    - holds an array of tasks
+    - title
+    - description
+    - due date
+    - urgent bool
+    - unique id
+Task 
+    - title string
+    - complete bool
+
+
+Menu 
+    - Shows array of projects
+        > collapsible accordian
+    - New project creation
+        > open new project form
+            * when project is submitted - open new project
+    - Edit project 
+        > open project form with all info of project
+            * delete project from menu - but keep it in memory
+            * if close instead of save - verify close without saving
+                - if close and no save, return the old project with no changes
+    - Remove project
+        > removes project from both screen and project list
+            * verify user wants to remove project
+    - Choose existing project
+        > open project 
+
+    - New Project form 
+        > title - required
+        > description
+        > due date
+        > color
+
+
+Open Project 
+    - Header:
+        > title
+        > description
+        > due date
+    - New Todo button
+        > opens new todo form
+    - Array of todos
+        > shows all todos under this project
+        > remove button
+            * verifies with user if todo is to be removed
+        > edit button
+            * opens todo form and fills out all information
+
+    - New todo form
+        > title - required
+        > description
+        > due date
+        > urgent checkbox
+        > Tasks - inputed one by one, as needed
+
+    - Color will change according to which color is chosen when project is created
+
+
+
+
+
+
+OBJECTS - 
+
+Project
+
+    Project(titleIn, IdIn, descrIn = '', dueDateIn = '', color = '')
+
+    VARIABLES : < title, description, due date, color, ID, todo array >
+
+        Title - string
+        description -string
+        due date - string 00/00/0000 
+        color - string to show what color to render
+        ID - unique int given by proj counter in ProjectManager
+        todo array - array of todo objects
+
+    METHODS : 
+
+        <GETTERS>
+        getTitle - return title
+        getDescr - return description
+        getDueDate - reuturn getDueDate
+        getColor - return color
+        getId - returns id
+        getTodoArray - returns todo array
+        getTodoById - returns individual todo using todo ID
+        getTodoByIndex - returns individual todo using index of array
+
+        <SETTERS>
+        setDescr - sets description
+        setDueDate - sets dueDate
+        setColor - sets color
+        setTodoArray - sets todo array to new array
+
+        <OTHER>
+        addTodo - adds todo to array
+        removeTodoById - removes todo by id from array
+        removeTodoByIndex - removes todo by index of array from array
+
+        return {
+            all methods
+        }
+
+Todo
+
+    Todo(title, id)
+    VARIABLES : < title, ID, description, dueDate, urgent, complete, task array >
+
+        Title - string
+        id - unique integer set by TodoManager
+        description - string
+        dueDate - 00/00/0000
+        urgent - bool 
+        complete - bool
+        task array - array of task objects
+
+    METHODS : 
+
+        <GETTERS>
+        getTitle - returns title
+        getDescr - returns description
+        getDueDate - reutrns dueDate
+        getUrgent - returns urgent bool
+        getComplete - returns complete bool
+        getTaskArray - returns array of tasks
+        getTaskByIndex - returns individual task by index of array
+        getTaskById - reutrns individual task by id of objects
+
+        <SETTERS> 
+        setDescr - 
+        setDueDate 
+        setUrgent 
+        setComplete
+        setTaskArray 
+
+        <OTHER> 
+        addTask - adds task to array
+        removeTaskById
+        removeTaskByIndex
+
+    return {
+        all methods
+    }
+
+    Task
+
+    VARIABLES : <title, id, complete>
+        title - 
+        id - set by TaskManager
+        complete - bool 
+
+    METHODS :
+        getTitle
+        getId
+        getComplete
+
+        setComplete
+
+MODULES - 
+
+
+
+    ProjectManager - 
+    {Handles any project method}
+
+    VARIABLES : 
+        chosenProjectIndex
+            Index of project in use
+        projectCounter - 
+            Whenever used ++
+        projects[]
+                temporarily holds array of projects 
+                > these projects will be stored in a database eventually
+
+        
+    FUNCTIONS : 
+        createProject(title, description, due date, )
+
+    
+
+    
+
+
+
+
+
+
+    TodoManager - 
+    { Handles any todo method}
+    TaskManager -
+    { Handles any task method}
+
+    ButtonListener -
+    {Adds event listeners to buttons - middle man to call other modules}
+
+    AppHandler -
+    {All central function - the application is run through this}
+
+    DOMController - 
+    {Handles DOM manipulation}
+    

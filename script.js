@@ -343,6 +343,7 @@ const ButtonListener = (function() {
 
         DOMController.closeTodoForm();
         reloadButtons();
+    
 
     });
 
@@ -355,6 +356,7 @@ const ButtonListener = (function() {
     const deleteCompleteTodosBtn = document.querySelector('#delete-complete-todos')
     deleteCompleteTodosBtn.addEventListener('click', ProjectManager.removeCompleteTodos)
 
+    document.addEventListener('resize', DOMController.resizeElements)
 
     document.addEventListener('DOMContentLoaded', function() {
         ProjectManager.loadProjectsFromStorage();
@@ -362,6 +364,7 @@ const ButtonListener = (function() {
         ProjectManager.showAllProjects()
 
         reloadButtons();
+        DOMController.resizeElements();
 
     });
 

@@ -44,6 +44,7 @@ const DOMController = (function() {
         projArray.forEach(proj => {
             _createProjectListItem(proj)
         })
+        resizeElements()
     }
 
     // OPENS INDIVIDUAL PROJECT
@@ -105,6 +106,37 @@ const DOMController = (function() {
         projTitle.textContent = ''
         projDescr.textContent = ''
         projDate.textContent = ''        
+    }
+
+    const resizeElements = () => {
+        const rmvProjBtns = document.querySelectorAll(`.remove-project-button`)
+        const openProjBtns = document.querySelectorAll(`.open-project-button`)
+
+        const width = window.innerWidth;
+        console.log(width)
+
+        for(let i=0; i<rmvProjBtns.length;i++) {
+            if(width < 500) {
+                rmvProjBtns[i].classList.remove('s3')
+                rmvProjBtns[i].classList.remove('offset-s2')
+
+                rmvProjBtns[i].classList.add('s5')
+
+                openProjBtns[i].classList.remove('s3')
+                // openProjBtn.classList.remove('offset-s2')
+                openProjBtns[i].classList.add('s5')
+            } else {
+                rmvProjBtns[i].classList.add('s3')
+                rmvProjBtns[i].classList.add('offset-s2')
+
+                rmvProjBtns[i].classList.remove('s5')
+
+                openProjBtns[i].classList.add('s3')
+                // openProjBtn.classList.remove('offset-s2')
+                openProjBtns[i].classList.remove('s5')
+            }
+        }
+
     }
 
     // CREATES ONE LI ELEMENT FOR PROJECTS ACCORDIAN
@@ -473,6 +505,7 @@ const DOMController = (function() {
         closeProjForm: closeProjForm,
         getProjColorFromRadio: getProjColorFromRadio,
         colorProject: colorProject,
+        resizeElements: resizeElements,
     }
 
 })();

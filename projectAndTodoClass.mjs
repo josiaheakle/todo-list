@@ -108,8 +108,8 @@ const Project = (titleIn, descrIn = ' ', dueDateIn = ' ', idIn = projCounter++) 
 
     const removeTodo = (todoId) => {
         for(let i=0; i<todoArray.length; i++) {
-            console.log(`TODO: ${i}/${todoArray.length}`)
-            console.log(`TODO ID: ${todoArray[i].getId()}/${todoId}`)
+            // console.log(`TODO: ${i}/${todoArray.length}`)
+            // console.log(`TODO ID: ${todoArray[i].getId()}/${todoId}`)
 
             if(todoArray[i].getId() == todoId) {
                 todoArray.splice(i, 1);

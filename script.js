@@ -73,7 +73,7 @@ const ProjectManager = (function() {
     // let todoEdit = false
     const editTodo = (todoId) => {
 
-        console.log(`edit todo called for id: ${todoId}`)
+        // console.log(`edit todo called for id: ${todoId}`)
         
         todo = projects[getCurrentProj()].getTodoFromId(todoId)
         projects[currentProj].removeTodo(todoId)
@@ -87,7 +87,7 @@ const ProjectManager = (function() {
 
 
         for(let i=0; i<getProjects()[getCurrentProj()].getTodoArray().length; i++) {
-            console.log(`CHECKING TODO: ${getProjects()[getCurrentProj()].getTodoArray()[i].getTitle()} | ${getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()}`)
+            // console.log(`CHECKING TODO: ${getProjects()[getCurrentProj()].getTodoArray()[i].getTitle()} | ${getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()}`)
             if(getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()) {
                 getProjects()[getCurrentProj()].removeTodo(getProjects()[getCurrentProj()].getTodoArray()[i].getId())
                 i--;
@@ -159,9 +159,9 @@ const ProjectManager = (function() {
                 let todoDescr = dataArray[2]
                 let todoDueDate = dataArray[3]
                 let todoUrgent = dataArray[4]
-                console.log(`URGENT: ${todoUrgent}` )
+                // console.log(`URGENT: ${todoUrgent}` )
                 let todoComplete = dataArray[5]
-                console.log(`COMPLETE: ${todoComplete}`)
+                // console.log(`COMPLETE: ${todoComplete}`)
                 let todo = Todo(todoTitle, todoDescr, todoDueDate, todoUrgent, todoComplete, todoId)
                 todoArray.push(todo)
             }
@@ -229,7 +229,7 @@ const ButtonListener = (function() {
 
             btn.onclick = function() {
                 DOMController.closeTodoForm();
-                console.log(btn.id)
+                // console.log(btn.id)
                 ProjectManager.editTodo(btn.id)
                 reloadButtons();
             }
@@ -360,9 +360,7 @@ const ButtonListener = (function() {
 
     document.addEventListener('DOMContentLoaded', function() {
         ProjectManager.loadProjectsFromStorage();
-        // console.log(ProjectManager.getProjects())
         ProjectManager.showAllProjects()
-
         reloadButtons();
         DOMController.resizeElements();
 

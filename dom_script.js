@@ -112,29 +112,64 @@ const DOMController = (function() {
         const rmvProjBtns = document.querySelectorAll(`.remove-project-button`)
         const openProjBtns = document.querySelectorAll(`.open-project-button`)
 
+/*
+        projBodySpan.className = 'col s8 project-body-responsive-left'
+        projBodySpan.textContent = `${proj.getDescr()}`
+        projDueSpan.className = 'col s4 row project-body-responsive-right'
+*/
+
+        const projBodySpans = document.querySelectorAll('.project-body-responsive-left')
+        const projDueSpans = document.querySelectorAll('.project-body-responsive-right')
+
         const width = window.innerWidth;
-        console.log(width)
+
+
+        let resizeForSmall = false;
+
+        if(width < 600) {
+            resizeForSmall = true;
+        } else {
+            resizeForSmall = false;
+        }
+
+        for(let i=0; i<projBodySpans.length; i++) {
+            if(resizeForSmall) {
+                projBodySpans[i].classList.remove('s8')
+                projBodySpans[i].classList.add('s6')
+
+                projDueSpans[i].classList.remove('s4')
+                projDueSpans[i].classList.add('s6')
+
+            } else {
+                projBodySpans[i].classList.remove('s6')
+                projBodySpans[i].classList.add('s8')
+
+                projDueSpans[i].classList.add('s4')
+                projDueSpans[i].classList.remove('s6')
+            }
+        }
+
 
         for(let i=0; i<rmvProjBtns.length;i++) {
-            if(width < 500) {
+
+            if(resizeForSmall) {
                 rmvProjBtns[i].classList.remove('s3')
                 rmvProjBtns[i].classList.remove('offset-s2')
-
+    
                 rmvProjBtns[i].classList.add('s5')
-
+    
                 openProjBtns[i].classList.remove('s3')
-                // openProjBtn.classList.remove('offset-s2')
                 openProjBtns[i].classList.add('s5')
             } else {
                 rmvProjBtns[i].classList.add('s3')
                 rmvProjBtns[i].classList.add('offset-s2')
-
+    
                 rmvProjBtns[i].classList.remove('s5')
-
+    
                 openProjBtns[i].classList.add('s3')
-                // openProjBtn.classList.remove('offset-s2')
                 openProjBtns[i].classList.remove('s5')
             }
+
         }
 
     }
@@ -175,9 +210,9 @@ const DOMController = (function() {
         projBodyDiv.className = 'row'
 
         // Span to organize under body div
-        projBodySpan.className = 'col s8'
+        projBodySpan.className = 'col s8 project-body-responsive-left'
         projBodySpan.textContent = `${proj.getDescr()}`
-        projDueSpan.className = 'col s4 row'
+        projDueSpan.className = 'col s4 row project-body-responsive-right'
 
         // Span under body span to organize left
         projDueSpanLeft.className = 'left'
@@ -411,7 +446,7 @@ const DOMController = (function() {
         const todoDueDate = todoCont.querySelector('#todo-due-date')
         const todoCheckbox = todoCont.querySelector(`#checkbox-${todo.getId()}`)
 
-        console.log(`TODO(${todo.getTitle()}) - urgent(${todo.getUrgent()}) complete(${todo.getComplete()})`)
+        // console.log(`TODO(${todo.getTitle()}) - urgent(${todo.getUrgent()}) complete(${todo.getComplete()})`)
 
         todoTitle.textContent = todo.getTitle();
         todoDescr.textContent = todo.getDescr();
@@ -424,7 +459,7 @@ const DOMController = (function() {
         todoCheckbox.checked = (todo.getComplete() == true) ? true: false;
 
         if(todo.getUrgent() == true) {
-            console.log(`urgent`)
+            // console.log(`urgent`)
             todoCont.classList.remove('blue-grey')
             todoCont.classList.add('red')
             todoCont.classList.add('lighten-3')
@@ -485,7 +520,7 @@ const DOMController = (function() {
     const colorProject = (color) => {
         const recolorObjects = document.querySelectorAll(`.${oldColor}`)
 
-        console.log(`obj amt: ${recolorObjects.length}`)
+        // console.log(`obj amt: ${recolorObjects.length}`)
 
         recolorObjects.forEach(obj => {
                 obj.classList.remove(oldColor)

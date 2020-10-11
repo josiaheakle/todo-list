@@ -52,6 +52,9 @@ const DOMController = (function() {
         _createProjectBreadcrumb(proj);
         closeTodoForm();
 
+        // const deleteComTodoBtn = document.querySelector('#delete-complete-todos')
+        // if(proj.getTodoArray().length > 0) deleteComTodoBtn.hidden = false;
+        // else deleteComTodoBtn.hidden = true;
 
         projsCont.hidden = true;
         projCont.hidden = false;
@@ -63,11 +66,19 @@ const DOMController = (function() {
             projDate.textContent = `Due: ${proj.getDueDate()}`
         }
 
+        let renderbtn = false;
         _clearProjectTodos()
         proj.getTodoArray().forEach(todo => {
             printTodo(todo)
+            if(todo.getComplete()) {
+                renderbtn = true;
+            }
         });
+        if (renderbtn) {
+
+        }
     }
+
 
     // CLOSES INDIVIDUAL PROJECT, AND OPENS PROJECT ACCORDIAN
     const _closeProject = () => {
@@ -363,48 +374,25 @@ const DOMController = (function() {
 
         _newTodoContainer(todo)
         const todoCont = document.querySelector(`#todo-container-${todo.getId()}`)
-
-
-        let strTitle;
-
-        // IF URGENT - ADD FUNCTIONALITY
-        if(todo.getUrgent()) {
-            todoCont.classList.forEach(li => {
-                if(li == 'blue-grey') {
-                    // console.log(`change`)
-                    // todoCont.classList.remove(li)
-                    // todoCont.classList.add('red')
-                } 
-            })
-            // todoCont.className = `${todoCont.className} red`
-        } 
-
-
-
         const todoTitle = todoCont.querySelector('#todo-title')
-
-
-// ==================================================================================FIX THIS 
-
-
         const todoDescr = todoCont.querySelector('#todo-descr')
-        const todoCheckbox = todoCont.querySelector(`#checkbox-${todo.getId()}`)
-        todoCheckbox.checked = todo.getComplete()
-
         const todoDueDate = todoCont.querySelector('#todo-due-date')
-        
+        const todoCheckbox = todoCont.querySelector(`#checkbox-${todo.getId()}`)
+
+        console.log(`TODO(${todo.getTitle()}) - urgent(${todo.getUrgent()}) complete(${todo.getComplete()})`)
+
         todoTitle.textContent = todo.getTitle();
-        // if(todo.getDescr() != '')
-            todoDescr.textContent = todo.getDescr();
-        // else 
-        //     todoCont.removeChild(todoDescr)
-        // // todoUrgent.checked = todo.getUrgent();
+        todoDescr.textContent = todo.getDescr();
         if(todo.getDueDate() != '') {
             todoDueDate.textContent = `${HelpfulFunctions.formatDate(todo.getDueDate())}`;
         } else { 
             todoDueDate.textContent = '00/00/0000'
         }
-        if(todo.getUrgent()) {
+
+        todoCheckbox.checked = (todo.getComplete() == true) ? true: false;
+
+        if(todo.getUrgent() == true) {
+            console.log(`urgent`)
             todoCont.classList.remove('blue-grey')
             todoCont.classList.add('red')
             todoCont.classList.add('lighten-3')
@@ -463,16 +451,14 @@ const DOMController = (function() {
     let oldColor = `blue-grey`
 
     const colorProject = (color) => {
-        const recolorObjects = document.querySelectorAll('.blue-grey')
+        const recolorObjects = document.querySelectorAll(`.${oldColor}`)
 
         console.log(`obj amt: ${recolorObjects.length}`)
 
         recolorObjects.forEach(obj => {
-            // if(obj.classList.contains('project-recolor')) {
-                obj.classList.remove('blue-grey')
+                obj.classList.remove(oldColor)
                 oldColor = color;
                 obj.classList.add(color)
-            // }
         })
     }
 

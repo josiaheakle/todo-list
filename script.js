@@ -41,7 +41,6 @@ const ProjectManager = (function() {
     // Shows all the todos within a project
     const openProject = (proj) => {
         currentProj = getProjIndex(proj);
-        // console.log(currentProj)
         DOMController.openProject(proj)
     }
 
@@ -84,6 +83,22 @@ const ProjectManager = (function() {
         
     }
 
+    const removeCompleteTodos = () => {
+
+
+        for(let i=0; i<getProjects()[getCurrentProj()].getTodoArray().length; i++) {
+            console.log(`CHECKING TODO: ${getProjects()[getCurrentProj()].getTodoArray()[i].getTitle()} | ${getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()}`)
+            if(getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()) {
+                getProjects()[getCurrentProj()].removeTodo(getProjects()[getCurrentProj()].getTodoArray()[i].getId())
+                i--;
+            }
+        }
+
+        FileManager.saveProject(getProjects[getCurrentProj()])
+        openProject(getProjects()[getCurrentProj()])
+
+    }
+
     // Gets the index within projects[] of the project
     // or returns -1 if project is not found
     const getProjIndex = (proj) => {
@@ -109,7 +124,7 @@ const ProjectManager = (function() {
 
     function _makeDefaultProject() {
         defaultProj = Project('Default Project', 'A default project', '')
-        defaultTodo = Todo('Default todo', 'a default todo', '', 3, false)
+        defaultTodo = Todo('Default todo', 'Click the plus icon to create a new todo.', '', false, false)
         defaultProj.addTodo(defaultTodo)
         return defaultProj
     }
@@ -144,7 +159,9 @@ const ProjectManager = (function() {
                 let todoDescr = dataArray[2]
                 let todoDueDate = dataArray[3]
                 let todoUrgent = dataArray[4]
+                console.log(`URGENT: ${todoUrgent}` )
                 let todoComplete = dataArray[5]
+                console.log(`COMPLETE: ${todoComplete}`)
                 let todo = Todo(todoTitle, todoDescr, todoDueDate, todoUrgent, todoComplete, todoId)
                 todoArray.push(todo)
             }
@@ -161,6 +178,7 @@ const ProjectManager = (function() {
     return {
         loadProjectsFromStorage: loadProjectsFromStorage,
         getCurrentProj: getCurrentProj,
+        removeCompleteTodos: removeCompleteTodos,
         // makeDefaultProject: makeDefaultProject,
         showAllProjects: showAllProjects,
         addProject: addProject,
@@ -334,7 +352,8 @@ const ButtonListener = (function() {
         reloadButtons();
     });
 
-
+    const deleteCompleteTodosBtn = document.querySelector('#delete-complete-todos')
+    deleteCompleteTodosBtn.addEventListener('click', ProjectManager.removeCompleteTodos)
 
 
     document.addEventListener('DOMContentLoaded', function() {

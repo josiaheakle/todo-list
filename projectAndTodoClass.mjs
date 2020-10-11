@@ -3,7 +3,7 @@ if(localStorage.getItem('todo-counter')) {
     todoCounter = localStorage.getItem('todo-counter')
 } 
 
-const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = 1, completeIn = false, idIn = todoCounter++) => {
+const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, completeIn = false, idIn = todoCounter++) => {
 
     localStorage.setItem('todo-counter', todoCounter)
 
@@ -108,6 +108,9 @@ const Project = (titleIn, descrIn = ' ', dueDateIn = ' ', idIn = projCounter++) 
 
     const removeTodo = (todoId) => {
         for(let i=0; i<todoArray.length; i++) {
+            console.log(`TODO: ${i}/${todoArray.length}`)
+            console.log(`TODO ID: ${todoArray[i].getId()}/${todoId}`)
+
             if(todoArray[i].getId() == todoId) {
                 todoArray.splice(i, 1);
             }

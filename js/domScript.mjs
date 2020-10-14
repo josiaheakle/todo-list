@@ -16,8 +16,6 @@ const DOMController = (function() {
     const projFormDescription = newProjForm.querySelector('#form-descr')
     const projFormDueDate = newProjForm.querySelector('#form-due-date')
     const projFormColor = document.getElementsByName('color-radio')
-    const projFormSubmit = newProjForm.querySelector('#form-submit')
-
 
     // PROJECTS ARRAY ELEMENT
     const projsCont = document.querySelector('#projects-container')
@@ -53,10 +51,6 @@ const DOMController = (function() {
         _createProjectBreadcrumb(proj);
         closeTodoForm();
 
-        // const deleteComTodoBtn = document.querySelector('#delete-complete-todos')
-        // if(proj.getTodoArray().length > 0) deleteComTodoBtn.hidden = false;
-        // else deleteComTodoBtn.hidden = true;
-
         projsCont.hidden = true;
         projCont.hidden = false;
         projTodos.hidden = false;
@@ -66,18 +60,10 @@ const DOMController = (function() {
         if(proj.getDueDate() != '') {
             projDate.textContent = `Due: ${proj.getDueDate()}`
         }
-
-        let renderbtn = false;
         _clearProjectTodos()
         proj.getTodoArray().forEach(todo => {
             printTodo(todo)
-            if(todo.getComplete()) {
-                renderbtn = true;
-            }
         });
-        if (renderbtn) {
-
-        }
     }
 
 
@@ -348,6 +334,12 @@ const DOMController = (function() {
                 <a id="0" class="red-text left btn-flat waves-effect waves-light mar-left remove-button">Remove</a>
             </div>
         </div>
+        */
+
+
+
+        /*
+
         */
 
         const todoCont = document.createElement('li')

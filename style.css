@@ -92,7 +92,6 @@
 .align-left {
     justify-self: left !important;
     align-self: left !important;
-    /* left: 10px; */
 }
 
 .no-pad {
@@ -111,3 +110,11 @@
     padding-right: 0px;
 }
 
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+#todo-sort-bar {
+    height: 42px;
+}

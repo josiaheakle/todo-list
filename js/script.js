@@ -1,23 +1,4 @@
 
-const HelpfulFunctions = (function() {
-
-    const formatDate = (dateStr) => {
-
-        let dateArray = dateStr.split('-')
-        let str = `${dateArray[1]}/${dateArray[2]}/${dateArray[0]}`;
-        return str;
-        
-    
-    }
-
-    return {
-        formatDate: formatDate,
-    }
-
-})();
-
-
-
 // PROJECT MANAGER ================================================= PROJECT MANAGER
 const ProjectManager = (function() {
 

@@ -11,6 +11,7 @@ const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, comple
     const title = titleIn;
     const descr = descrIn;
     const dueDate = dueDateIn;
+    const createdDate = HelpfulFunctions.getCurrentDate()
     const urgent = urgentLvl;
     let complete = completeIn;
 

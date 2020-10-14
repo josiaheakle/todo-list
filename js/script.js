@@ -87,7 +87,6 @@ const ProjectManager = (function() {
 
 
         for(let i=0; i<getProjects()[getCurrentProj()].getTodoArray().length; i++) {
-            // console.log(`CHECKING TODO: ${getProjects()[getCurrentProj()].getTodoArray()[i].getTitle()} | ${getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()}`)
             if(getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()) {
                 getProjects()[getCurrentProj()].removeTodo(getProjects()[getCurrentProj()].getTodoArray()[i].getId())
                 i--;
@@ -139,7 +138,7 @@ const ProjectManager = (function() {
             let todoAmt = data.slice(openIndex+1, closeIndex)
             let todoArray = []
             let projStr = data.slice(0,openIndex)
-            projStrArray = projStr.split('|')
+            projStrArray = projStr.split('|$$|')
             projectId = projStrArray[0]
             projectTitle = projStrArray[1]
             projectDescr = projStrArray[2]
@@ -151,9 +150,9 @@ const ProjectManager = (function() {
             let proj = Project(projectTitle, projectDescr, projectDueDate, projectId)
             projectArray.push(proj)
             // console.log(proj.getTitle())
-            let todoDataArray = todoData.split('/')
+            let todoDataArray = todoData.split('/$$/')
             for(let i=0; i<todoAmt; i++) {
-                let dataArray = todoDataArray[i].split('|')
+                let dataArray = todoDataArray[i].split('|$$|')
                 let todoTitle = dataArray[1]
                 let todoId = dataArray[0]
                 let todoDescr = dataArray[2]
@@ -250,8 +249,6 @@ const ButtonListener = (function() {
         const openProjectButtons = document.querySelectorAll('.open-project-button')
         openProjectButtons.forEach(btn => {
             btn.addEventListener('click', function() {
-                // console.log(`PROJECTS: ${ProjectManager.getProjects()}`)
-                // console.log(`BUTTON ID: ${btn.id}`)
                 ProjectManager.getProjects().forEach(proj => {
                     if(proj.getId() == btn.id) {
                         ProjectManager.openProject(proj)

@@ -108,8 +108,6 @@ const Project = (titleIn, descrIn = ' ', dueDateIn = ' ', idIn = projCounter++) 
 
     const removeTodo = (todoId) => {
         for(let i=0; i<todoArray.length; i++) {
-            // console.log(`TODO: ${i}/${todoArray.length}`)
-            // console.log(`TODO ID: ${todoArray[i].getId()}/${todoId}`)
 
             if(todoArray[i].getId() == todoId) {
                 todoArray.splice(i, 1);
@@ -118,7 +116,7 @@ const Project = (titleIn, descrIn = ' ', dueDateIn = ' ', idIn = projCounter++) 
     }
 
     const makeDataString = () => {
-        const dataString = `${id}|${title}|${descr}|${dueDate}${_makeTodoArrayDataString()}`;
+        const dataString = `${id}|$$|${title}|$$|${descr}|$$|${dueDate}${_makeTodoArrayDataString()}`;
         return dataString;
 
     }
@@ -126,7 +124,7 @@ const Project = (titleIn, descrIn = ' ', dueDateIn = ' ', idIn = projCounter++) 
     const _makeTodoArrayDataString = () => {
         let todoStr =  `{${todoArray.length}}`;
         todoArray.forEach(todo => {
-            todoStr = `${todoStr}${todo.getId()}|${todo.getTitle()}|${todo.getDescr()}|${todo.getDueDate()}|${todo.getUrgent()}|${todo.getComplete()}/`;
+            todoStr = `${todoStr}${todo.getId()}|$$|${todo.getTitle()}|$$|${todo.getDescr()}|$$|${todo.getDueDate()}|$$|${todo.getUrgent()}|$$|${todo.getComplete()}/$$/`;
         })
         return todoStr;
     }

@@ -42,7 +42,6 @@ const FileManager = (function() {
             let key = localStorage.key(i)
             let data = localStorage.getItem(key)
             if(!(key == 'project-counter' || key=='todo-counter')) {
-                // console.log(key)
                 dataArray.push(data)
             }
         }

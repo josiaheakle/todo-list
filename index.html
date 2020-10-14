@@ -44,9 +44,6 @@
             </div>
 
             <!-- Add new project here -->
-
-
-
             <div id='new-project-form' class='card blue-grey darken-2 mar-top' hidden>
                 <a id='close-project-btn' class="right btn blue-grey darken-2 btn-flat waves-effect waves-light close-btn" title='Close Todo'><i id='floating-button' class="material-icons">close</i></a>
 
@@ -60,76 +57,11 @@
                             <label for="form-title">Title</label>
                             <input class="center" type="text" name="descr"  id="form-descr">
                             <label for="form-descr">Description</label>
-
-                            <!-- CHANGE FROM LEFT AND RIGHT TO TOP AND BOTTOM WHEN MOBILE -->
                             <div class="row">
                                 <div class='col s6 offset-s3'>
                                     <input type="date" name='date' id='form-due-date'  placeholder="">
                                     <label for="form-due-date">Due Date</label>
                                 </div>
-
-                                <!-- COLOR RADIOS -->
-                                <!-- <div class="pad-top col s6"> -->
-                                    <!-- <form id='color-form' onsubmit='return false'>
-                                        <div class='row'>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='blue-grey' checked />
-                                                    <span>Grey</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='green' />
-                                                    <span>Green</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='blue' />
-                                                    <span>Blue</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='yellow' />
-                                                    <span>Yellow</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='red' />
-                                                    <span>Red</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='purple' />
-                                                    <span>Purple</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='pink' />
-                                                    <span>Pink</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='white' />
-                                                    <span>White</span>
-                                                </label>
-                                            </p>
-                                            <p class="col s4">
-                                                <label class='left'>
-                                                    <input name="color-radio" type="radio" value='black' />
-                                                    <span>Black</span>
-                                                </label>
-                                            </p>
-                                        </div>
-                                    </form>
-                                </div> -->
-                                
                             </div>
 
                             <!-- Submit button -->
@@ -140,16 +72,10 @@
                     </form>
                 </div>
             </div>
-
         </div>
 
         <!-- SHOW WHEN Project is open -->
         <div id='open-project' class="row container" hidden>
-<!-- 
-            <div id='todo-cards' class='col s7 left'>
-                 todo cards rendered here 
-            </div> -->
-
             <!-- CARD TO SHOW ALL PROJECT INFORMATION -->
             <div id='project-info' class='card blue-grey'>
                 <div class='card-content center'>
@@ -161,7 +87,6 @@
                     <a id='new-todo-btn' class="right btn-large btn-floating waves-effect waves-light" title='New Todo'><i id='floating-button' class="material-icons">add</i></a>
                 </div>
             </div>
-
             <button id='delete-complete-todos' class='btn-small waves-effect waves-light'>Delete Complete Todos</button>
 
             <!-- ADD NEW TODO HERE -->
@@ -181,8 +106,6 @@
                             <label for="form-descr">Description</label>
 
                             <div class="row">
-
-
                                 <div class='col s8'>
                                     <input type="date" name='date' id='form-due-date'  placeholder="">
                                     <label for="form-due-date">Due Date</label>
@@ -213,27 +136,16 @@
                     <a href="#"><span id='due-date-sort' class='left black-text'><i class='material-icons smaller-icon'>arrow_drop_down</i>Due Date</span></a>
                     <a href="#"><span id='title-sort' class='center black-text'><i class='material-icons smaller-icon'>arrow_drop_down</i>Title</span></a>
                     <a href="#"><span id='complete-sort' class='right black-text'><i class="material-icons smaller-icon">arrow_drop_down</i>Completed</span></a>
-
                 </li>
-            
-
             </ul>
-
-
-
         </div>
-
-
-
-    <!-- <button class='btn center' onclick="localStorage.clear()">CLEAR STORAGE</button> -->
-
 
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src='projectAndTodoClass.mjs'></script>
-    <script src='fileManager.mjs'></script>
-    <script src='dom_script.js'></script>
-    <script src="script.js"></script>
+    <script src='js/objectClasses.mjs'></script>
+    <script src='js/fileManager.mjs'></script>
+    <script src='js/domScript.mjs'></script>
+    <script src="js/script.js"></script>
 </body>
 </html>

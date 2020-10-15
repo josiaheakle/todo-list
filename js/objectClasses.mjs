@@ -31,6 +31,10 @@ const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, comple
         return dueDate;
     }
 
+    const getCreatedDate = () => {
+        return createdDate;
+    }
+
     const getUrgent = () => {
         return urgent;
     }
@@ -43,11 +47,13 @@ const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, comple
         complete = bool;
     }
 
+
     return {
         getId,
         getTitle,
         getDescr,
         getDueDate,
+        getCreatedDate,
         getUrgent,
         getComplete,
         setComplete,

@@ -49,6 +49,10 @@
     padding-bottom: 15px;
 }
 
+.small-mar-top {
+    margin-top: 8px;
+}
+
 .mar-top {
     margin-top: 45px;
 }
@@ -102,7 +106,7 @@
 }
 
 .no-pad-bot {
-    padding-bottom: 0px;
+    padding-bottom: 0px !important;
     margin-bottom: 0px;
 }
 
@@ -116,5 +120,37 @@
 }
 
 #todo-sort-bar {
-    height: 42px;
+    height: 47px;
+}
+
+.text-in-mid {
+    justify-content: center;
+}
+
+.collection-item {
+    line-height: 2.5rem !important;
+}
+
+.todo-container {
+    height: 58px;
+}
+
+/* .todo-container:hover {
+    background-color: #607d8b !important;
+    color: black !important;
+} */
+
+/* .white-check {
+    color: white !important;
+    border-color: white !important;
+}
+
+.white-check:hover {
+    color: black !important;
+    border-color: white !important;
+} */
+
+[type="checkbox"].filled-in:not(:checked)+span:not(.lever):after {
+    border-color: white !important;
+
 }

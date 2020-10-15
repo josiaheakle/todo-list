@@ -69,6 +69,7 @@ const ProjectManager = (function() {
 
         for(let i=0; i<getProjects()[getCurrentProj()].getTodoArray().length; i++) {
             if(getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()) {
+                console.log(`${getProjects()[getCurrentProj()].getTodoArray()[i].getTitle()} is complete`)
                 getProjects()[getCurrentProj()].removeTodo(getProjects()[getCurrentProj()].getTodoArray()[i].getId())
                 i--;
             }
@@ -76,6 +77,7 @@ const ProjectManager = (function() {
 
         FileManager.saveProject(getProjects[getCurrentProj()])
         openProject(getProjects()[getCurrentProj()])
+        ButtonListener.reloadButtons()
 
     }
 
@@ -184,7 +186,35 @@ const ButtonListener = (function() {
     const newProjButton = document.querySelector('#new-project-btn')
     const closeProjButton = document.querySelector('#close-project-btn')
 
+    const _modalBtnEvents = (todoId) => {
+        const btns = document.querySelectorAll(`.modal-btn-${todoId}`)
+        btns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const todoModal = document.querySelector(`#todo-modal-${todoId}`)
+                let todoInstance = M.Modal.getInstance(todoModal)
+                todoInstance.close();
+            })
+        })
+    }
+
     const reloadButtons = () => {
+
+        const todoBtns = document.querySelectorAll('.open-todo-btn')
+        console.log(todoBtns)
+
+
+        todoBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+
+                let idStr = btn.id
+                const todoModal = document.querySelector(`#todo-modal-${idStr}`)
+                InitMaterialize.initModal(todoModal)
+                let todoInstance = M.Modal.getInstance(todoModal)
+                todoInstance.open();
+                _modalBtnEvents(idStr);
+
+            })
+        })
 
         const todoCheckboxes = document.querySelectorAll('.todo-checkbox')
         todoCheckboxes.forEach(chk => {
@@ -238,8 +268,6 @@ const ButtonListener = (function() {
                 });
             });
         })
-      
-
 
     }
 
@@ -251,17 +279,23 @@ const ButtonListener = (function() {
     const formSubmit = newTodoForm.querySelector('#form-submit')
 
 
-    formSubmit.addEventListener('click', function() {
+    function _subTodoForm() {
 
         if(formTitle.value != '') {
             let todo = Todo(formTitle.value, formDescription.value, formDueDate.value, formUrgent.checked)
-
-
-
             ProjectManager.getProjects()[ProjectManager.getCurrentProj()].addTodo(todo);
             FileManager.saveProjectArray(ProjectManager.getProjects())
             ProjectManager.openProject(ProjectManager.getProjects()[ProjectManager.getCurrentProj()])
             DOMController.closeTodoForm();
+            reloadButtons();
+        }
+    }
+
+
+    formSubmit.addEventListener('click', function() {
+
+        if(formTitle.value != '') {
+            _subTodoForm()
             reloadButtons()
         } else {
             M.toast({html: 'Cannot make a todo with a blank title!'})
@@ -310,6 +344,7 @@ const ButtonListener = (function() {
     });
 
     newTodoButton.addEventListener('click', function() {
+        _subTodoForm()
         DOMController.closeTodoForm();
         DOMController.showTodoForm();
         reloadButtons();

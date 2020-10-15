@@ -290,85 +290,100 @@ const DOMController = (function() {
     }
 
     // TODO DOM ========================================= TODO DOM 
-    // Creates a new todo container
-    let todoIndex = 0;
+
+    const _newTodoModal = (todo) => {
+        const todoModal = document.createElement('div')
+        todoModal.className = 'todo-modal blue-grey darken-3 modal'
+        todoModal.id = `todo-modal-${todo.getId()}`
+
+        const todoModalContent = document.createElement('div')
+        todoModalContent.className = 'modal-content no-pad-bot'
+
+        const todoModalTitle = document.createElement('h4')
+        todoModalTitle.className = 'center white-text'
+        todoModalTitle.id = `todo-modal-title-${todo.getId()}`
+
+        const todoModalDateDiv = document.createElement('div')
+        todoModalDateDiv.className = 'row container no-pad-bot white-text'
+
+        const todoModalCreatedOn = document.createElement('p')
+        todoModalCreatedOn.id = `todo-created-on-date-${todo.getId()}`
+        todoModalCreatedOn.className = 'left'
+        // todoModalCreatedOn.id = todo.getId()
+
+        const todoModalDueDate = document.createElement('p')
+        todoModalDueDate.id = `todo-due-date-${todo.getId()}`
+        todoModalDueDate.className = 'right'
+        // todoModalDueDate.id = todo.getId()
+
+        todoModalDateDiv.appendChild(todoModalCreatedOn)
+        todoModalDateDiv.appendChild(todoModalDueDate)
+
+        const todoModalDescr = document.createElement('div')
+        todoModalDescr.id = `todo-descr-${todo.getId()}`
+        todoModalDescr.className = 'center white-text'
+        
+        todoModalContent.appendChild(todoModalTitle)
+        todoModalContent.appendChild(todoModalDescr)
+        todoModalContent.appendChild(todoModalDateDiv)
+
+        todoModal.appendChild(todoModalContent)
+        
+        const todoModalFooter = document.createElement('div')
+        todoModalFooter.className = 'modal-footer blue-grey darken-2 '
+
+        const todoFooter = document.createElement('div')
+        todoFooter.className = 'row no-pad-bot container'
+            
+        const removeButton = document.createElement('a')
+        removeButton.textContent = 'Remove'
+        removeButton.id = todo.getId()
+        removeButton.className = `red left btn waves-effect waves-light mar-left remove-button modal-btn-${todo.getId()}` 
+
+        const editButton = document.createElement('a')
+        editButton.id = todo.getId()
+        editButton.textContent = 'Edit'
+        editButton.className = `right btn waves-effect waves-light mar-right edit-button modal-btn-${todo.getId()}`
+        todoFooter.appendChild(editButton)
+ 
+        todoFooter.appendChild(removeButton)
+
+        todoModalFooter.appendChild(todoFooter)
+
+        todoModal.appendChild(todoModalFooter)
+
+        const openProj = document.querySelector('#open-project')
+        openProj.appendChild(todoModal)
+    }
 
     const _newTodoContainer = (todo) => {
 
-        // const spacer = document.createElement('div')
-        // spacer.className = 'todo-spacer col s6'
-        // const todoCont = document.createElement('div')
-        // todoCont.id = `todo-container-${todoIndex++}`
-        // todoCont.className = `card blue-grey todo-container center pad-top pad-bot`
-        // const todoTitle = document.createElement('span')
-        // todoTitle.id = 'todo-title'
-        // todoTitle.className = 'card-title center'
-        // const todoDescr = document.createElement('p')
-        // todoDescr.id = 'todo-descr'
 
-        // const todoDueDate = document.createElement('p')
-        // todoDueDate.id = 'todo-due-date'
-
-
-
-        // todoCont.appendChild(todoTitle)
-        // todoCont.appendChild(todoDueDate)
-
-        // todoCont.appendChild(todoDescr)
-        // // todoCont.appendChild(todoUrgent)
-        // spacer.appendChild(todoCont)
-        // projTodos.appendChild(spacer)
-
-
-
-        
- 
-
-
-        /*
-        <div id="todo-container-0" class="card blue-grey todo-container center pad-top pad-bot">
-            <span id="todo-title" class="card-title center">Default todo</span>
-            <p id="todo-descr">a default todo</p>
-            <div class="row no-pad-bot">
-                <a id="0" class="black-text right btn-flat waves-effect waves-light mar-right edit-button">Edit</a>
-                <a id="0" class="red-text left btn-flat waves-effect waves-light mar-left remove-button">Remove</a>
-            </div>
-        </div>
-        */
-
-
-
-        /*
-
-        */
 
         const todoCont = document.createElement('li')
-        todoCont.className = 'blue-grey todo-container collection-item'
-        // todoCont.style.height = 'auto'
+        todoCont.className = 'blue-grey darken-2 todo-container collection-item white-text'
         todoCont.id = `todo-container-${todo.getId()}`
-
-        const spacer = document.createElement('div')
 
 
         const todoTop = document.createElement('div')
-        todoTop.className = 'small-pad-bot'
+        todoTop.className = 'text-in-mid'
         todoTop.id = 'todo-top'
 
         const todoTitle = document.createElement('span')
-        todoTitle.className = 'center bold' 
-        todoTitle.id = 'todo-title'
+        todoTitle.className = 'bold left' 
+        todoTitle.id = `todo-title-${todo.getId()}`
 
-        const todoDueDate = document.createElement('span')
-        todoDueDate.className = 'left'
-        todoDueDate.id = 'todo-due-date'
-        todoDueDate.style.width = '80px'
-
+        const seeMoreTodoBtn = document.createElement('a')
+        seeMoreTodoBtn.className = 'btn white-text waves-effect waves-light right open-todo-btn'
+        seeMoreTodoBtn.id = todo.getId()
+        seeMoreTodoBtn.textContent = 'Open'
 
         const todoCheckboxPara = document.createElement('p')
-        todoCheckboxPara.className = 'right no-mar-top no-mar-bot'
+        todoCheckboxPara.className = 'right small-mar-top no-mar-bot white-text'
         todoCheckboxPara.style.width = '80px'
-        
         const todoCheckboxLabel = document.createElement('label')
+        todoCheckboxLabel.className = 'white-check'
+        
         todoCheckboxPara.appendChild(todoCheckboxLabel)
         
         const todoCheckbox = document.createElement('input')
@@ -377,53 +392,16 @@ const DOMController = (function() {
         todoCheckbox.id = `checkbox-${todo.getId()}`
         todoCheckboxLabel.appendChild(todoCheckbox)
         const todoCheckboxSpan = document.createElement('span')
-        todoCheckboxSpan.className = 'no-pad todo-checkbox'
+        todoCheckboxSpan.className = 'no-pad todo-checkbox white-check'
         todoCheckboxSpan.id = todo.getId()
-        // todoCheckboxSpan.style.fontSize = '18px'
-        // todoCheckboxSpan.id = 'todo-urgent'
+
         todoCheckboxLabel.appendChild(todoCheckboxSpan)
 
-        // const breakline = document.createElement('br')
-
-        const spacer2 = document.createElement('div')
-        spacer2.className = 'center'
-        const todoDescr = document.createElement('p')
-        todoDescr.id = 'todo-descr'
-        todoDescr.className = 'small-pad-bot'
-        spacer2.appendChild(todoDescr)
-
-        // todoDescr.textContent = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores alias incidunt illum rem magnam aliquid quibusdam reiciendis atque, aperiam porro dolorum, ratione voluptatem. Ex quisquam aspernatur, nesciunt facilis accusantium unde!'
-
-
-        const todoFooter = document.createElement('div')
-        todoFooter.className = 'row no-pad-bot'
-            
-        const removeButton = document.createElement('a')
-        removeButton.textContent = 'Remove'
-        removeButton.id = todo.getId()
-        removeButton.className = 'red-text left btn-flat waves-effect waves-light mar-left remove-button' 
-
-        const editButton = document.createElement('a')
-        editButton.id = todo.getId()
-        editButton.textContent = 'Edit'
-        editButton.className = 'black-text right btn-flat waves-effect waves-light mar-right edit-button'
-        todoFooter.appendChild(editButton)
- 
-        todoFooter.appendChild(removeButton)
-
-
-
         todoTop.appendChild(todoTitle)
-        todoTop.appendChild(todoDueDate)
         todoTop.appendChild(todoCheckboxPara)
+        todoTop.appendChild(seeMoreTodoBtn)
 
-        spacer.appendChild(todoTop)
-        // spacer.appendChild(breakline)
-
-        spacer.appendChild(spacer2)
-        spacer.appendChild(todoFooter)
-
-        todoCont.appendChild(spacer)
+        todoCont.appendChild(todoTop)
         projTodos.appendChild(todoCont)
 
     }
@@ -432,34 +410,43 @@ const DOMController = (function() {
     const printTodo = (todo) => {
 
         _newTodoContainer(todo)
-        const todoCont = document.querySelector(`#todo-container-${todo.getId()}`)
-        const todoTitle = todoCont.querySelector('#todo-title')
-        const todoDescr = todoCont.querySelector('#todo-descr')
-        const todoDueDate = todoCont.querySelector('#todo-due-date')
-        const todoCheckbox = todoCont.querySelector(`#checkbox-${todo.getId()}`)
+        _newTodoModal(todo)
+        // const todoCont = document.querySelector(`#todo-container-${todo.getId()}`)
+        const todoTitle = document.querySelector(`#todo-title-${todo.getId()}`)
+        const todoCheckbox = document.querySelector(`#checkbox-${todo.getId()}`)
 
-        // console.log(`TODO(${todo.getTitle()}) - urgent(${todo.getUrgent()}) complete(${todo.getComplete()})`)
 
+
+        const todoModalTitle = document.querySelector(`#todo-modal-title-${todo.getId()}`)
+        const todoDescr = document.querySelector(`#todo-descr-${todo.getId()}`)
+        const todoModalDueDate = document.querySelector(`#todo-due-date-${todo.getId()}`)
+        const todoModalCreatedOn = document.querySelector(`#todo-created-on-date-${todo.getId()}`)
+ 
         todoTitle.textContent = todo.getTitle();
+        todoModalTitle.textContent = todo.getTitle();
         todoDescr.textContent = todo.getDescr();
+
+        todoModalCreatedOn.textContent = `Created: ${HelpfulFunctions.formatDate(todo.getCreatedDate())}`
+
         if(todo.getDueDate() != '') {
-            todoDueDate.textContent = `${HelpfulFunctions.formatDate(todo.getDueDate())}`;
+            todoModalDueDate.textContent = `Due: ${HelpfulFunctions.formatDate(todo.getDueDate())}`;
         } else { 
-            todoDueDate.textContent = '00/00/0000'
+            todoModalDueDate.textContent = 'Due: 00/00/0000'
         }
 
         todoCheckbox.checked = (todo.getComplete() == true) ? true: false;
+        console.log(`${todo.getTitle()} : ${todo.getComplete()}`)
 
-        if(todo.getUrgent() == true) {
-            // console.log(`urgent`)
-            todoCont.classList.remove('blue-grey')
-            todoCont.classList.add('red')
-            todoCont.classList.add('lighten-3')
-        } else {
-            todoCont.classList.add('blue-grey')
-            todoCont.classList.remove('red')
-            todoCont.classList.remove('lighten-3')
-        }
+        // if(todo.getUrgent() == true) {
+        //     // console.log(`urgent`)
+        //     todoCont.classList.remove('blue-grey')
+        //     todoCont.classList.add('red')
+        //     todoCont.classList.add('lighten-3')
+        // } else {
+        //     todoCont.classList.add('blue-grey')
+        //     todoCont.classList.remove('red')
+        //     todoCont.classList.remove('lighten-3')
+        // }
     }
 
     // Clear all values in todo form
@@ -544,4 +531,26 @@ const InitMaterialize = (function() {
         var collapsibleInstances = M.Collapsible.init(collapsibleElements);
 
     });
+
+    
+
+    const initModals = () => {
+        var modalElems = document.querySelectorAll('.modal');
+        var modalInstances = M.Modal.init(modalElems);
+
+        console.log(modalInstances.length)
+    }
+
+    const initModal = (domElem) => {
+        // const todoModal = document.querySelector(`#todo-modal-${id}`)
+        if(!M.Modal.getInstance(domElem)) {
+            let mInstance = M.Modal.init(domElem);
+        }
+    }
+
+    return  {
+        // initModals: initModals,
+        initModal: initModal,
+    }
+    
 })();

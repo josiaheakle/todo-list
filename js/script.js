@@ -54,7 +54,6 @@ const ProjectManager = (function() {
     // let todoEdit = false
     const editTodo = (todoId) => {
 
-        // console.log(`edit todo called for id: ${todoId}`)
         
         todo = projects[getCurrentProj()].getTodoFromId(todoId)
         projects[currentProj].removeTodo(todoId)
@@ -68,8 +67,7 @@ const ProjectManager = (function() {
 
 
         for(let i=0; i<getProjects()[getCurrentProj()].getTodoArray().length; i++) {
-            if(getProjects()[getCurrentProj()].getTodoArray()[i].getComplete()) {
-                console.log(`${getProjects()[getCurrentProj()].getTodoArray()[i].getTitle()} is complete`)
+            if(getProjects()[getCurrentProj()].getTodoArray()[i].getComplete() == true) {
                 getProjects()[getCurrentProj()].removeTodo(getProjects()[getCurrentProj()].getTodoArray()[i].getId())
                 i--;
             }
@@ -96,7 +94,6 @@ const ProjectManager = (function() {
 
     function loadProjectsFromStorage() {
         let data = FileManager.loadAllProjects()
-        // console.log(data)
         setProjects(_convertDataToProjects(data))
         
         if(projects.length == 0) {
@@ -113,6 +110,9 @@ const ProjectManager = (function() {
 
     // converts string of data back to projects 
     function _convertDataToProjects(projectData) {
+
+
+
         let projectArray = []
         projectData.forEach(data => {
             let openIndex = data.indexOf('{')
@@ -126,30 +126,24 @@ const ProjectManager = (function() {
             projectTitle = projStrArray[1]
             projectDescr = projStrArray[2]
             projectDueDate = projStrArray[3]
-            // console.log(projectId)
-            // console.log(projectTitle)
-            // console.log(projectDescr)
-            // console.log(projectDueDate)
             let proj = Project(projectTitle, projectDescr, projectDueDate, projectId)
             projectArray.push(proj)
-            // console.log(proj.getTitle())
             let todoDataArray = todoData.split('/$$/')
             for(let i=0; i<todoAmt; i++) {
+                console.log(todoDataArray[i])
                 let dataArray = todoDataArray[i].split('|$$|')
-                let todoTitle = dataArray[1]
                 let todoId = dataArray[0]
+                let todoTitle = dataArray[1]
                 let todoDescr = dataArray[2]
                 let todoDueDate = dataArray[3]
-                let todoUrgent = dataArray[4]
-                // console.log(`URGENT: ${todoUrgent}` )
-                let todoComplete = dataArray[5]
-                // console.log(`COMPLETE: ${todoComplete}`)
-                let todo = Todo(todoTitle, todoDescr, todoDueDate, todoUrgent, todoComplete, todoId)
+                let todoUrgent = (dataArray[4]=='true')?true:false;
+                let todoComplete = (dataArray[5]=='true')?true:false;
+                let todoCreateDate = dataArray[6]
+                let todo = Todo(todoTitle, todoDescr, todoDueDate, todoUrgent, todoComplete, todoId, todoCreateDate)
                 todoArray.push(todo)
             }
             proj.setTodoArray(todoArray)
         })
-        // console.log(projectArray)
         return projectArray
     }
 
@@ -200,7 +194,6 @@ const ButtonListener = (function() {
     const reloadButtons = () => {
 
         const todoBtns = document.querySelectorAll('.open-todo-btn')
-        console.log(todoBtns)
 
 
         todoBtns.forEach(btn => {
@@ -239,7 +232,6 @@ const ButtonListener = (function() {
 
             btn.onclick = function() {
                 DOMController.closeTodoForm();
-                // console.log(btn.id)
                 ProjectManager.editTodo(btn.id)
                 reloadButtons();
             }
@@ -282,6 +274,7 @@ const ButtonListener = (function() {
     function _subTodoForm() {
 
         if(formTitle.value != '') {
+            // (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, completeIn = false, idIn = todoCounter++, cDate = HelpfulFunctions.getCurrentDate()) 
             let todo = Todo(formTitle.value, formDescription.value, formDueDate.value, formUrgent.checked)
             ProjectManager.getProjects()[ProjectManager.getCurrentProj()].addTodo(todo);
             FileManager.saveProjectArray(ProjectManager.getProjects())
@@ -317,7 +310,6 @@ const ButtonListener = (function() {
             }
             let proj = Project(projFormTitle.value, projFormDescription.value, projDate)
 
-            // console.log(`TITLE: ${proj.getTitle()} DESCR: ${proj.getDescr()} ID: ${proj.getId()}`)
 
             ProjectManager.addProject(proj)
             ProjectManager.openProject(ProjectManager.getProjects()[ProjectManager.getProjIndex(proj)])
@@ -369,7 +361,7 @@ const ButtonListener = (function() {
     const deleteCompleteTodosBtn = document.querySelector('#delete-complete-todos')
     deleteCompleteTodosBtn.addEventListener('click', ProjectManager.removeCompleteTodos)
 
-    document.addEventListener('resize', DOMController.resizeElements)
+
 
     document.addEventListener('DOMContentLoaded', function() {
         ProjectManager.loadProjectsFromStorage();
@@ -378,6 +370,11 @@ const ButtonListener = (function() {
         DOMController.resizeElements();
 
     });
+
+    window.addEventListener('resize', function() {
+        console.log(`RESIZE!!!`)
+        DOMController.resizeElements();
+    })
 
     return {
         reloadButtons: reloadButtons,

@@ -61,9 +61,10 @@ const DOMController = (function() {
             projDate.textContent = `Due: ${proj.getDueDate()}`
         }
         _clearProjectTodos()
-        proj.getTodoArray().forEach(todo => {
-            printTodo(todo)
-        });
+        _printTodos(proj.getTodoArray())
+        // proj.getTodoArray().forEach(todo => {
+        //     printTodo(todo)
+        // });
     }
 
 
@@ -98,21 +99,15 @@ const DOMController = (function() {
         const rmvProjBtns = document.querySelectorAll(`.remove-project-button`)
         const openProjBtns = document.querySelectorAll(`.open-project-button`)
 
-/*
-        projBodySpan.className = 'col s8 project-body-responsive-left'
-        projBodySpan.textContent = `${proj.getDescr()}`
-        projDueSpan.className = 'col s4 row project-body-responsive-right'
-*/
 
         const projBodySpans = document.querySelectorAll('.project-body-responsive-left')
         const projDueSpans = document.querySelectorAll('.project-body-responsive-right')
 
         const width = window.innerWidth;
 
-
         let resizeForSmall = false;
 
-        if(width < 600) {
+        if(width < 700) {
             resizeForSmall = true;
         } else {
             resizeForSmall = false;
@@ -121,17 +116,19 @@ const DOMController = (function() {
         for(let i=0; i<projBodySpans.length; i++) {
             if(resizeForSmall) {
                 projBodySpans[i].classList.remove('s8')
-                projBodySpans[i].classList.add('s6')
+                projBodySpans[i].classList.add('s12')
+                projBodySpans[i].classList.add('small-mar-bot')
 
                 projDueSpans[i].classList.remove('s4')
-                projDueSpans[i].classList.add('s6')
+                projDueSpans[i].classList.add('s12')
 
             } else {
-                projBodySpans[i].classList.remove('s6')
+                projBodySpans[i].classList.remove('s12')
                 projBodySpans[i].classList.add('s8')
+                projBodySpans[i].classList.remove('small-mar-bot')
 
                 projDueSpans[i].classList.add('s4')
-                projDueSpans[i].classList.remove('s6')
+                projDueSpans[i].classList.remove('s12')
             }
         }
 
@@ -242,14 +239,6 @@ const DOMController = (function() {
 
 
 
-
-
-
-
-
-
-
-
     const _createProjectBreadcrumb = (proj) => {
         projBreadcrumb.hidden = false;
         projBreadcrumb.textContent = proj.getTitle();
@@ -264,7 +253,11 @@ const DOMController = (function() {
         formTitle.value = todo.getTitle()
         formDescription.value = todo.getDescr()
         formDueDate.value = todo.getDueDate()
-        formUrgent.checked = todo.getUrgent()
+        if(todo.getUrgent() == true) {
+            formUrgent.checked = true;
+        } else {
+            formUrgent.checked = false;
+        }
 
 
     }
@@ -299,9 +292,13 @@ const DOMController = (function() {
         const todoModalContent = document.createElement('div')
         todoModalContent.className = 'modal-content no-pad-bot'
 
-        const todoModalTitle = document.createElement('h4')
+        const todoModalTitleSpan = document.createElement('span')
+
+        const todoModalTitle = document.createElement('h5')
         todoModalTitle.className = 'center white-text'
         todoModalTitle.id = `todo-modal-title-${todo.getId()}`
+
+        todoModalTitleSpan.appendChild(todoModalTitle)
 
         const todoModalDateDiv = document.createElement('div')
         todoModalDateDiv.className = 'row container no-pad-bot white-text'
@@ -320,10 +317,10 @@ const DOMController = (function() {
         todoModalDateDiv.appendChild(todoModalDueDate)
 
         const todoModalDescr = document.createElement('div')
-        todoModalDescr.id = `todo-descr-${todo.getId()}`
+        todoModalDescr.id = `todo-modal-descr-${todo.getId()}`
         todoModalDescr.className = 'center white-text'
         
-        todoModalContent.appendChild(todoModalTitle)
+        todoModalContent.appendChild(todoModalTitleSpan)
         todoModalContent.appendChild(todoModalDescr)
         todoModalContent.appendChild(todoModalDateDiv)
 
@@ -365,22 +362,38 @@ const DOMController = (function() {
         todoCont.id = `todo-container-${todo.getId()}`
 
 
-        const todoTop = document.createElement('div')
-        todoTop.className = 'text-in-mid'
-        todoTop.id = 'todo-top'
+        // const todoTop = document.createElement('div')
+        // todoTop.className = 'text-in-mid'
+        // todoTop.id = 'todo-top'
+
+        const rowCont = document.createElement('div')
+        rowCont.className = 'row no-pad-bot'
+
+        const todoTitleDiv = document.createElement('div')
+        todoTitleDiv.className = 'col s8'
 
         const todoTitle = document.createElement('span')
-        todoTitle.className = 'bold left' 
+        todoTitle.className = 'bold left small-pad-right' 
         todoTitle.id = `todo-title-${todo.getId()}`
+
+        const br = document.createElement('br')
+
+        const todoDescr = document.createElement('span')
+        todoDescr.className = 'left'
+        todoDescr.style.fontStyle= 'italic';
+        todoDescr.style.textAlign = 'left'
+        todoDescr.id = `todo-descr-${todo.getId()}`
+
+        const todoRightCont = document.createElement('div')
+        todoRightCont.className = 'right col s4'
 
         const seeMoreTodoBtn = document.createElement('a')
         seeMoreTodoBtn.className = 'btn white-text waves-effect waves-light right open-todo-btn'
         seeMoreTodoBtn.id = todo.getId()
-        seeMoreTodoBtn.textContent = 'Open'
+        seeMoreTodoBtn.textContent = 'Details'
 
         const todoCheckboxPara = document.createElement('p')
-        todoCheckboxPara.className = 'right small-mar-top no-mar-bot white-text'
-        todoCheckboxPara.style.width = '80px'
+        todoCheckboxPara.className = 'right small-mar-top no-mar-bot white-text pad-left'
         const todoCheckboxLabel = document.createElement('label')
         todoCheckboxLabel.className = 'white-check'
         
@@ -397,13 +410,43 @@ const DOMController = (function() {
 
         todoCheckboxLabel.appendChild(todoCheckboxSpan)
 
-        todoTop.appendChild(todoTitle)
-        todoTop.appendChild(todoCheckboxPara)
-        todoTop.appendChild(seeMoreTodoBtn)
+        const urgentIndicator = document.createElement('i')
+        urgentIndicator.className = 'material-icons left red-text six-pad-top text-darken-2'
+        urgentIndicator.textContent = 'new_releases'
 
-        todoCont.appendChild(todoTop)
+
+
+        todoTitleDiv.appendChild(todoTitle)
+        if(todo.getUrgent() == true) {
+            todoTitleDiv.appendChild(urgentIndicator)
+        }
+        todoTitleDiv.appendChild(br)
+        todoTitleDiv.appendChild(todoDescr)
+
+        rowCont.appendChild(todoTitleDiv)
+
+        todoRightCont.appendChild(todoCheckboxPara)
+        todoRightCont.appendChild(seeMoreTodoBtn)
+        rowCont.appendChild(todoRightCont)
+
+        todoCont.appendChild(rowCont)
         projTodos.appendChild(todoCont)
 
+    }
+
+    const _printTodos = (todoArray) => {
+        let urgentList = []
+        for(let i=0; i<todoArray.length; i++) {
+            if(todoArray[i].getUrgent() == true) {
+                printTodo(todoArray[i])
+                urgentList.push(i)
+            }
+        }
+        for(let i=0; i<todoArray.length; i++) {
+            if(!urgentList.includes(i)) {
+                printTodo(todoArray[i])
+            }
+        }
     }
 
     // Print todo to the DOM
@@ -415,38 +458,29 @@ const DOMController = (function() {
         const todoTitle = document.querySelector(`#todo-title-${todo.getId()}`)
         const todoCheckbox = document.querySelector(`#checkbox-${todo.getId()}`)
 
-
-
         const todoModalTitle = document.querySelector(`#todo-modal-title-${todo.getId()}`)
         const todoDescr = document.querySelector(`#todo-descr-${todo.getId()}`)
+        const todoModalDescr = document.querySelector(`#todo-modal-descr-${todo.getId()}`)
         const todoModalDueDate = document.querySelector(`#todo-due-date-${todo.getId()}`)
         const todoModalCreatedOn = document.querySelector(`#todo-created-on-date-${todo.getId()}`)
  
-        todoTitle.textContent = todo.getTitle();
+        todoTitle.textContent = `${todo.getTitle()} `;
         todoModalTitle.textContent = todo.getTitle();
-        todoDescr.textContent = todo.getDescr();
+        // if(todo.getDescr() != '' && todo.getDescr() != ' ') {
+            todoDescr.textContent = `${todo.getDescr()}`;
+        // }
+        todoModalDescr.textContent = todo.getDescr()
 
-        todoModalCreatedOn.textContent = `Created: ${HelpfulFunctions.formatDate(todo.getCreatedDate())}`
+        todoModalCreatedOn.textContent = `Created: \n ${HelpfulFunctions.formatDate(todo.getCreatedDate())}`
 
-        if(todo.getDueDate() != '') {
-            todoModalDueDate.textContent = `Due: ${HelpfulFunctions.formatDate(todo.getDueDate())}`;
+        if(todo.getDueDate() != '' && todo.getDueDate() != ' ') {
+            todoModalDueDate.textContent = `Due: \n ${HelpfulFunctions.formatDate(todo.getDueDate())}`;
         } else { 
-            todoModalDueDate.textContent = 'Due: 00/00/0000'
+            todoModalDueDate.textContent = 'Due: \n 00/00/0000'
         }
 
         todoCheckbox.checked = (todo.getComplete() == true) ? true: false;
-        console.log(`${todo.getTitle()} : ${todo.getComplete()}`)
 
-        // if(todo.getUrgent() == true) {
-        //     // console.log(`urgent`)
-        //     todoCont.classList.remove('blue-grey')
-        //     todoCont.classList.add('red')
-        //     todoCont.classList.add('lighten-3')
-        // } else {
-        //     todoCont.classList.add('blue-grey')
-        //     todoCont.classList.remove('red')
-        //     todoCont.classList.remove('lighten-3')
-        // }
     }
 
     // Clear all values in todo form
@@ -499,8 +533,6 @@ const DOMController = (function() {
     const colorProject = (color) => {
         const recolorObjects = document.querySelectorAll(`.${oldColor}`)
 
-        // console.log(`obj amt: ${recolorObjects.length}`)
-
         recolorObjects.forEach(obj => {
                 obj.classList.remove(oldColor)
                 oldColor = color;
@@ -532,14 +564,6 @@ const InitMaterialize = (function() {
 
     });
 
-    
-
-    const initModals = () => {
-        var modalElems = document.querySelectorAll('.modal');
-        var modalInstances = M.Modal.init(modalElems);
-
-        console.log(modalInstances.length)
-    }
 
     const initModal = (domElem) => {
         // const todoModal = document.querySelector(`#todo-modal-${id}`)
@@ -549,7 +573,6 @@ const InitMaterialize = (function() {
     }
 
     return  {
-        // initModals: initModals,
         initModal: initModal,
     }
     

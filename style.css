@@ -40,6 +40,10 @@
     padding-top: 10px;
 }
 
+.small-pad-right {
+    padding-right: 5px;
+}
+
 .small-mar-top-and-bot {
     margin-top: 20px;
     margin-bottom: 10px;
@@ -53,12 +57,20 @@
     margin-top: 8px;
 }
 
+.small-mar-bot {
+    margin-bottom: 15px;
+}
+
 .mar-top {
     margin-top: 45px;
 }
 
 .mar-bot {
     margin-bottom: 45px;
+}
+
+.six-pad-top {
+    padding-top: 6px;
 }
 
 .todo-container {
@@ -131,9 +143,9 @@
     line-height: 2.5rem !important;
 }
 
-.todo-container {
+/* .todo-container {
     height: 58px;
-}
+} */
 
 /* .todo-container:hover {
     background-color: #607d8b !important;

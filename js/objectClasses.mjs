@@ -3,7 +3,7 @@ if(localStorage.getItem('todo-counter')) {
     todoCounter = localStorage.getItem('todo-counter')
 } 
 
-const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, completeIn = false, idIn = todoCounter++) => {
+const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl, completeIn = false, idIn = todoCounter++, cDate = HelpfulFunctions.getCurrentDate()) => {
 
     localStorage.setItem('todo-counter', todoCounter)
 
@@ -11,8 +11,14 @@ const Todo = (titleIn, descrIn = ' ', dueDateIn = ' ', urgentLvl = false, comple
     const title = titleIn;
     const descr = descrIn;
     const dueDate = dueDateIn;
-    const createdDate = HelpfulFunctions.getCurrentDate()
-    const urgent = urgentLvl;
+    const createdDate = cDate;
+    let urgent;
+    if(urgentLvl == undefined) {
+        urgent = false;
+    } else {
+        urgent = urgentLvl;
+
+    }
     let complete = completeIn;
 
     const getId = () => {
@@ -131,8 +137,12 @@ const Project = (titleIn, descrIn = ' ', dueDateIn = ' ', idIn = projCounter++) 
     const _makeTodoArrayDataString = () => {
         let todoStr =  `{${todoArray.length}}`;
         todoArray.forEach(todo => {
-            todoStr = `${todoStr}${todo.getId()}|$$|${todo.getTitle()}|$$|${todo.getDescr()}|$$|${todo.getDueDate()}|$$|${todo.getUrgent()}|$$|${todo.getComplete()}/$$/`;
+            todoStr = `${todoStr}${todo.getId()}|$$|${todo.getTitle()}|$$|${(todo.getDescr()=='')?' ':todo.getDescr()}|$$|${(todo.getDueDate()=='')?' ': todo.getDueDate()}|$$|${(todo.getUrgent()==true?true:false)}|$$|${todo.getComplete()}|$$|${todo.getCreatedDate()}/$$/`;
         })
+
+
+
+
         return todoStr;
     }
 
